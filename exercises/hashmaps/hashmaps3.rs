@@ -14,7 +14,7 @@
 
 // Execute `rustlings hint hashmaps3` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
+// I AM DONE
 
 use std::collections::HashMap;
 
@@ -40,9 +40,81 @@ fn build_scores_table(results: String) -> HashMap<String, Team> {
         // will be number of goals conceded from team_2, and similarly
         // goals scored by team_2 will be the number of goals conceded by
         // team_1.
+
+        //my sol
+        // let team_1_struct = Team {
+        //     name:  (*team_1_name).to_string(),
+        //     goals_scored: team_1_score,
+        //     goals_conceded: team_2_score,
+        // };
+        // let team_2_struct = Team {
+        //     name:  (*team_1_name).to_string(),
+        //     goals_scored: team_2_score,
+        //     goals_conceded: team_1_score,
+        // };
+        // scores.insert(team_1_name,team_1_struct); // Overwrites previous values
+        // scores.insert(team_2_name,team_2_struct); // Overwrites previous values
+        // for score in scores{
+        //     let goals = scores.entry(team_1_name).or_insert(team_1_struct);
+        //     *goals
+        // }
+
+        scores
+            .entry(team_1_name.clone())
+            .and_modify(|t| {
+                t.goals_scored += team_1_score;
+                t.goals_conceded += team_2_score;
+            })
+            .or_insert(Team {
+                name: team_1_name,
+                goals_scored: team_1_score,
+                goals_conceded: team_2_score,
+            });
+
+        scores
+            .entry(team_2_name.clone())
+            .and_modify(|t| {
+                t.goals_scored += team_2_score;
+                t.goals_conceded += team_1_score;
+            })
+            .or_insert(Team {
+                name: team_2_name,
+                goals_scored: team_2_score,
+                goals_conceded: team_1_score,
+            });
+
+        // scores.entry(team_2_name).or_insert(team_2_struct);
     }
     scores
 }
+
+// for r in results.lines() {
+//     let v: Vec<&str> = r.split(',').collect();
+//     let team_1_name = v[0].to_string();
+//     let team_1_score: u8 = v[2].parse().unwrap();
+//     let team_2_name = v[1].to_string();
+//     let team_2_score: u8 = v[3].parse().unwrap();
+//     // TODO: Populate the scores table with details extracted from the
+//     // current line. Keep in mind that goals scored by team_1
+//     // will be number of goals conceded from team_2, and similarly
+//     // goals scored by team_2 will be the number of goals conceded by
+//     // team_1.
+
+//     scores.entry(team_1_name.clone()) //cloned it to be used later in a more ergonomic way, since "entry" expects a "String" and not "&String"
+//     .and_modify(|t| { //"t" being the value of the "scores: HashMap<String, Team>" which is a team type.
+//         t.goals_scored += team_1_score; // no need for deref on "t" (like, *t), since t is a u8
+//         t.goals_conceded += team_2_score;
+//     })
+//     .or_insert(Team {name: team_1_name, goals_scored: team_1_score, goals_conceded: team_2_score});
+
+//     scores.entry(team_2_name.clone()) // just the same implementation but for team 2
+//     .and_modify(|t| {
+//         t.goals_scored += team_2_score;
+//         t.goals_conceded += team_1_score;
+//     })
+//     .or_insert(Team {name: team_2_name, goals_scored: team_2_score, goals_conceded: team_1_score});
+// }
+// scores
 
 #[cfg(test)]
 mod tests {

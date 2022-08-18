@@ -3,34 +3,26 @@
 
 // I AM NOT DONE
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+fn main() {
+    let optional_word = Some(String::from("rustlings"));
+    let optional_word2 = Some(7);
+    // TODO: Make this an if let statement whose value is "Some" type
 
-    #[test]
-    fn simple_option() {
-        let target = "rustlings";
-        let optional_target = Some(target);
-
-        // TODO: Make this an if let statement whose value is "Some" type
-        word = optional_target {
-            assert_eq!(word, target);
-        }
+    if let Some(ref word) = optional_word {
+        println!("The word is: {}", word);
+        println!("{:?} unwraps to: {:?}", optional_word2, optional_word2.unwrap());
+    } else {
+        println!("The optional word doesn't contain anything");
     }
 
-    #[test]
-    fn layered_option() {
-        let mut range = 10;
-        let mut optional_integers: Vec<Option<i8>> = Vec::new();
-        for i in 0..(range + 1) {
-            optional_integers.push(Some(i));
-        }
+    let mut optional_integers_vec: Vec<Option<i8>> = Vec::new();
+    for x in 1..10 {
+        optional_integers_vec.push(Some(x));
+    }
 
-        // TODO: make this a while let statement - remember that vector.pop also adds another layer of Option<T>
-        // You can stack `Option<T>`'s into while let and if let
-        integer = optional_integers.pop() {
-            assert_eq!(integer, range);
-            range -= 1;
-        }
+    // TODO: make this a while let statement - remember that vector.pop also adds another layer of Option<T>
+    // You can stack `Option<T>`'s into while let and if let
+    while let Some(integer) = optional_integers_vec.pop() {
+        println!("current value: {:?}", integer);
     }
 }

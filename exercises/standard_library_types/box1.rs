@@ -10,7 +10,7 @@
 // elements: the value of the current item and the next item. The last item is a value called `Nil`.
 //
 // Step 1: use a `Box` in the enum definition to make the code compile
-// Step 2: create both empty and non-empty cons lists by replacing `todo!()`
+// Step 2: create both empty and non-empty cons lists by replacing `unimplemented!()`
 //
 // Note: the tests should not be changed
 //
@@ -33,11 +33,11 @@ fn main() {
 }
 
 pub fn create_empty_list() -> List {
-    todo!()
+    unimplemented!()
 }
 
 pub fn create_non_empty_list() -> List {
-    todo!()
+    unimplemented!()
 }
 
 #[cfg(test)]
